@@ -1,0 +1,81 @@
+package ass1submission;
+
+public class EvalPostfix {
+	
+/**
+ * 
+ * In class EvalPostfix I will evaluate the postfix received from class InfixToPostfix.
+ * Following the given algorithm
+ * 
+ * i = 1
+  while i<= n
+  
+     if v_i is an operand:        Push v_i to tmp2.
+     if v_i is an operator:       Apply v_i to the top two elements of tmp2. 
+                                  Replace these by the result in tmp2.
+     i = i + 1
+     Output result from tmp2.
+ * 
+ * @author Amanda Hoffström & Ekaterina Legoido
+ */
+
+	NotAStackDouble noStack;                              // Reference variable for object stack of class NotAStackDouble
+	
+	public boolean isNumeric(String s){
+		  return s.matches("-?\\d+(\\.\\d+)?");       // Match string with given values in RegEx. 
+		                                              
+		}
+	
+	public double expEval(String postfix) throws Exception{
+		noStack = new NotAStackDouble(postfix.length());
+		String delims = "[ ]+";                       // Use delimiter to delete all spaces in stack. 
+		String[] element = postfix.split(delims);
+		return expEval(element);
+	}
+	
+	// Expecting that the input shall always be valid
+	public double expEval(String[] postfix) throws Exception{
+		double  result = 0;
+		
+		for(int i = 0; i< postfix.length;i ++){
+			if(this.isNumeric(postfix[i])){
+				noStack.push(Double.valueOf(postfix[i]));  // Converting string representation to double and pushing to stack.
+			}
+			
+			else if(!this.isNumeric(postfix[i])) {
+				double tmp1, tmp2;
+				switch (postfix[i]) {                      // Switch to check for all operators and apply operation of operator
+				case "+":
+					noStack.push(noStack.pop() + noStack.pop());
+					break;
+				case "-":
+					tmp1 = noStack.pop(); 
+					tmp2 = noStack.pop();
+					noStack.push(tmp2 - tmp1);
+					break;
+				case "*":
+					noStack.push(noStack.pop() * noStack.pop());
+					break;
+				case "x":
+					noStack.push(noStack.pop() * noStack.pop());
+					break;
+				case "/":
+					tmp1 = noStack.pop(); 
+					tmp2 = noStack.pop();
+					noStack.push(tmp2 / tmp1);
+					break;
+				default:
+					try {
+						throw new Exception("invalid operator");
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		
+		result = noStack.pop();
+		return result ;
+	}
+	
+}
