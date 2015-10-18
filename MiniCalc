@@ -1,0 +1,45 @@
+package ass1submission;
+
+import java.io.*;
+
+public class MiniCalc {
+	
+	
+	/**
+	 * 
+	 * In class MiniCalc objects are created (keyword new) and initialized by constructors in order to 
+	 * call public methods/subroutines from other classes. I chose this way of solving the 
+	 * assignment to provide the reader with a better over-view of the code. And it is also 
+	 * easier for me to code, because it is less messy and I can easily try out my code
+	 * in different classes/tasks while coding, and thereby avoid errors. 
+	 * 
+	 * To create an object: ClassName object = new ConstructorName();
+	 * 
+	 * @author Amanda Hoffström & Ekaterina Legoido
+	 * 
+	 */
+
+	public static void main(String args[]) throws Exception{
+		
+		Greetings greet = new Greetings(); // First line creates a reference variable for object greet from class Greetings
+		                                   // Keyword new creates the object and Greetings(); calls the constructor Greetings i.e initialize object
+		
+		InfixToPostfix i2p;                // Create a reference variable for object i2p and eval. Objects will be created and initialized in while loop below. 
+		EvalPostfix eval;                  
+		greet.welcome();                   // Call the method welcome from object greet, which will print Welcome-sign. 
+		boolean cont = greet.bye();        // Boolean variable = method bye from object greet. 
+		while(cont){                       // while cont = true run this code
+			
+			System.out.println("Please enter an arithmetic expression to evaluate");
+			BufferedReader input = new BufferedReader(new InputStreamReader(System.in)); 
+			String infix = input.readLine();
+			i2p = new InfixToPostfix();    // Create the reference variable i2p and initialize by calling constructor InfixToPostfix
+			String postfix = i2p.convert(infix); // Converts returned value infix to object i2p.    
+			System.out.println("Postfix notation of entered infix expression is: " + postfix);			
+			eval = new EvalPostfix();
+			System.out.println("The result of the expression is: " + eval.expEval(postfix));
+			cont = greet.bye();           // call method bye from object greet. If user wants to exit after the run. 
+		}	
+		
+	}
+}
