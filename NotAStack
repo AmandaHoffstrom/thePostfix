@@ -1,0 +1,59 @@
+package ass1submission;
+
+/**
+ * This class is created for int values, which are used in the 1st task - transformation from infix to postfix form of expression.
+ * It describes the exception cases, which can happen if person is imputing or popping too many values. 
+ * We thought that it would be nice to give more guidelines to the person who is about to input the values. 
+ * It is the additional class which makes the program to look nicer. This class has two exceptions.
+ *  @author Amanda Hoffström & Ekaterina Legoido
+ */
+
+public class NotAStack {
+	int[] values;                             // Declare array of type int
+	int counter;
+	int pointer;
+	int size;
+	
+	public NotAStack(int sizei){             // Public constructor of the NotAStack class with int parameter declared as sizei
+		values = new int[sizei];             // Allocates memory for sizei integers 
+		counter = 0;
+		pointer = sizei;
+		size = sizei;                        // Gives int size of sizei 
+	}
+	
+	public void put(int d) throws Exception{ // Throwing exception explicitly, put() has same function as push()
+                                             // If "if" statement is true, it "throws" the exception and prints the phrase, 
+                                             // If not, it is implementing the "else" statement
+		if(counter >= size){             
+			throw new Exception("It's not a student pub, you can't put more values into this");
+		}
+		else{
+			values[pointer-1] = d;
+			pointer--;
+			counter++;
+		}
+	}
+	
+	public int get() throws Exception{       // Throwing exception explicitly, where get() has same function as pop()
+                                             // If "if" statement is true, it "throws" the exception and prints the phrase,
+                                             // If not, it implementing the "else" statements and returns the values
+		if(counter < 0){
+			throw new Exception("It's not your credit card, there are no values to pop more");
+		}
+		else{
+			counter--;
+			pointer++;
+			return values[pointer-1];
+		}
+		
+	}
+	
+	public boolean isEmpty(){
+		return counter == 0;
+	}
+	
+	public int look(){                      // Same function as peek()         
+		return values[pointer];
+	}
+	
+}
