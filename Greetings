@@ -1,0 +1,46 @@
+package ass1submission;
+
+import java.util.Scanner;
+
+/**
+ * 
+ * In class Greetings I am creating the method welcome of type void. 
+ * Here I print out Welcome-sign.
+ * I also create method bye of type boolean. This method is used to
+ * read user input, and evaluate it to true or false. If input = true
+ * the method is called in class MiniCalc and run through the while-loop
+ * until condition is false, then exits with "bye bye". 
+ *
+ *@author Amanda Hoffström & Ekaterina Legoido
+ *
+ */
+
+public class Greetings {
+	
+	public void welcome(){
+		System.out.println ("+************************************+");
+		System.out.println ("*                                    *");
+		System.out.println ("*    Welcome to DIT948 Calculator    *");
+		System.out.println ("*                                    *");
+		System.out.println ("+************************************+");
+	}
+	
+	public boolean bye(){
+		System.out.println();
+		System.out.println("Press \"E\" to exit or any other key to continue");  
+
+		Scanner sc = new Scanner (System.in);  
+		boolean go = false;
+		char con; 
+		con = sc.next().charAt(0);             
+		if (con == 'e' || con == 'E') {
+			go = false;
+			System.out.println("Bye bye!");
+		}
+		else {
+			go = true;
+		}
+		return go;
+	}
+	
+}
