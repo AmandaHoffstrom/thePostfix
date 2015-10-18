@@ -1,0 +1,92 @@
+package ass1submission;
+
+/**
+ * 
+ * @author amandahoffstrom
+ *
+ *In class InfixToPostfix I will take the input infix expression and 
+ *convert it to its representation in postfix, following the given algorithm
+ *
+ *for i=1 to m
+ *
+    if c_i is an operand: Transfer c_i to output.
+    if c_i is a left parentheses: Push c_i to tmp.
+    if c_i is a right parentheses: Pop elements from tmp and transfer
+        them to output until a left-parentheses is met. Pop left-parentheses.
+    if c_i is an operator: Let the top tmp element be t. Pop and transfer 
+         elements from tmp to output until:
+         
+     p(t) < p(c_i) or
+     t is a left-parentheses or
+     tmp is empty.
+     Push c_i to tmp.
+     Transfer the remaining elements in tmp to output.
+ *
+ *@author Amanda Hoffström & Ekaterina Legoido
+ *
+ */
+
+public class InfixToPostfix {
+
+	private String ops = "-+/*x"; 
+    private StringBuilder sb = new StringBuilder();   // Create StringBuilder as temporary variable for expression 
+    private NotAStack nsa;                            // Give reference variable to object nsa of class NotAStack
+
+    public String convert(String infix) throws Exception {
+    	                                             
+    	nsa = new NotAStack(infix.length()+1);       // Create object nsa and initialize it to infix.length()+1;   
+               
+    	for (String element : infix.split("\\s")) {  // Split String infix at each encountered space. Element takes value of each split infix
+            if (element.isEmpty())                   
+                continue;		                     // if condition is true, restart the loop with next element
+            char c = element.charAt(0);
+            int indx = ops.indexOf(c); 
+      
+            
+            
+            /**
+             * If indx is operator
+             * While the top element of nsa is an operator, hi2, and hi1 is left-associative and
+             * has a precedence >= hi2. Or if hi1 is right-associative and > hi2, pop hi2 from nsa
+             * and transfer to sb. Put hi1 in nsa. 
+             * 
+             */
+            
+            if (indx != -1) {                        // Check if operator exists in the String
+                if (nsa.isEmpty())
+                    nsa.put(indx);                  
+ 
+                else {
+                    while (!nsa.isEmpty()) {
+                        int hi2;
+                        int hi1;
+                        hi2 = nsa.look();         // Look at top element of nsa
+                        hi1 = indx;              
+                        if (hi2 > hi1 || (hi2 == hi1)) 
+                            sb.append(ops.charAt(nsa.get())).append(' ');  
+                        else break;
+                    }
+                    nsa.put(indx);                      
+                }
+            } 
+            
+            
+            else if (c == '(') {
+                nsa.put(-2); // -2 stands for '('
+            } 
+            else if (c == ')') {
+                                                    
+                while (nsa.look() != -2)         
+                    sb.append(ops.charAt(nsa.get())).append(' ');
+                nsa.get();
+            }
+            else {                                     // If operand
+                sb.append(element).append(' ');
+            }
+        }
+        while (!nsa.isEmpty())
+            sb.append(ops.charAt(nsa.get())).append(' ');
+        return sb.toString();
+    }
+	
+}
